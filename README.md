@@ -33,103 +33,72 @@ Before running the dashboard, ensure you have:
 
 ```bash
 pip install -r requirements.txt
-Access to marketing and business data sources (CSV files or APIs)
+```
 
 ⚙️ Installation & Setup
 Clone the repository:
 
-bash
-Copy code
+```bash
 git clone https://github.com/username/marketing-dashboard.git
+```
 Navigate into the project folder:
 
-bash
-Copy code
+```bash
 cd marketing-dashboard
+```
 Install dependencies:
 
-bash
-Copy code
+```bash
 pip install -r requirements.txt
+```
 Run the dashboard:
 
-bash
-Copy code
+```bash
 streamlit run app.py
-📊 Data Sources
+```
+## 📊 Data Sources
+
 Input data includes:
 
-Facebook Ads daily campaign metrics
+- Facebook Ads daily campaign metrics  
+- Google Ads reports on impressions, clicks, CPC, conversions  
+- TikTok Ads engagement and conversion data  
+- E-commerce platform data (revenue, orders, average order value)  
 
-Google Ads reports on impressions, clicks, CPC, conversions
+Data can be provided via **CSV files** or **API integrations**.
 
-TikTok Ads engagement and conversion data
+---
 
-E-commerce platform data (revenue, orders, average order value)
+## 🖥️ Usage
 
-Data can be provided via CSV files or API integrations.
-
-🖥️ Usage
 Use the sidebar to:
 
-Select marketing channels
-
-Filter campaigns by date range
-
-Explore charts that show:
-
-Campaign performance trends (impressions, clicks, conversions)
-
-ROI & revenue impact
-
-Customer engagement metrics
+- Select marketing channels  
+- Filter campaigns by date range  
+- Explore charts that show:
+  - Campaign performance trends (impressions, clicks, conversions)  
+  - ROI & revenue impact  
+  - Customer engagement metrics  
 
 Gain actionable insights into how marketing spend drives business growth.
 
-🤝 Contributing
-Contributions are welcome!
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!  
 To contribute:
 
-Fork the repository
+1. Fork the repository  
+2. Create a new feature branch  
+3. Submit a pull request  
 
-Create a new feature branch
+---
 
-Submit a pull request
+## 📌 Future Enhancements (Planned)
 
-📜 License
-This project is licensed under the MIT License.
-See the LICENSE file for details.
+- 🔄 Real-time API integration (Google Ads, Facebook Marketing API, TikTok Ads API)  
+- 📤 Export reports as PDF/Excel  
+- 📱 Responsive layout for mobile devices  
+- 🤖 Predictive analytics for ROI forecasting  
 
-📌 Future Enhancements (Planned)
-🔄 Real-time API integration (Google Ads, Facebook Marketing API, TikTok Ads API)
-
-📤 Export reports as PDF/Excel
-
-📱 Responsive layout for mobile devices
-
-🤖 Predictive analytics for ROI forecasting
-
-🏷️ Example Screenshot (Optional)
-You can add a sample dashboard screenshot here:
-
-markdown
-Copy code
-![Dashboard Screenshot](docs/screenshot.png)
-📑 Table of Contents
-Features
-
-Project Overview
-
-Prerequisites
-
-Installation & Setup
-
-Data Sources
-
-Usage
-
-Contributing
-
-License
-
-Future Enhancements
