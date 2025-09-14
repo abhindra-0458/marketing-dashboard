@@ -4,6 +4,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import matplotlib.pyplot as plt
 # import datetime as dt
 # from datetime import datetime, timedelta
 
@@ -264,7 +265,7 @@ elif page == "🚀 Platform Performance":
     platform_metrics['CPC'] = platform_metrics['spend'] / platform_metrics['clicks']
 
     # Display platform comparison table
-    st.subheader("📊 Platform Comparison Table")
+    st.subheader("📊 Platform Comparison")
 
     # Format the dataframe for display
     display_df = platform_metrics.copy()
@@ -276,7 +277,87 @@ elif page == "🚀 Platform Performance":
     display_df['impression'] = display_df['impression'].apply(lambda x: f"{x:,}")
     display_df['clicks'] = display_df['clicks'].apply(lambda x: f"{x:,}")
 
-    st.dataframe(display_df, use_container_width=True)
+    #st.dataframe(display_df, use_container_width=True)
+    
+    plot_columns = [
+    "impression",
+    "clicks",
+    "spend",
+    "attributed revenue",
+    "ROAS",
+    "CTR",
+    "CPC"
+    ]
+    
+    # Display labels for user-friendly dropdown
+    plot_labels = {
+        "impression": "Impressions",
+        "clicks": "Clicks",
+        "spend": "Spend",
+        "attributed revenue": "Attributed Revenue",
+        "ROAS": "ROAS",
+        "CTR": "CTR (%)",
+        "CPC": "CPC"
+    }
+
+    # # Sidebar widget for metric selection
+    # selected_label = st.selectbox("Select Metric to Visualize", [plot_labels[col] for col in plot_columns])
+    # selected_col = [col for col in plot_columns if plot_labels[col] == selected_label][0]
+
+    # # Dynamic Bar Plot
+    # st.subheader(f"Bar Plot: {selected_label}")
+    # fig, ax = plt.subplots()
+    # ax.bar(platform_metrics["platform"], platform_metrics[selected_col], color=["#0077B6", "#43AA8B", "#FF7F51"])
+    # ax.set_xlabel("Platform")
+    # ax.set_ylabel(selected_label)
+    # st.pyplot(fig)
+    
+    tabs = st.tabs([plot_labels[col] for col in plot_columns])
+
+    for i, tab in enumerate(tabs):
+        with tab:
+            selected_col = plot_columns[i]
+            selected_label = plot_labels[selected_col]
+            fig = px.bar(
+                platform_metrics,
+                x="platform",
+                y=selected_col,
+                color="platform",
+                color_discrete_map={
+                    "Facebook": "#0077B6",
+                    "Google": "#43AA8B",
+                    "TikTok": "#FF7F51"
+                },
+                template="plotly_dark"
+            )
+            fig.update_layout(
+                width=820, height=400
+            )
+            st.plotly_chart(fig, use_container_width=False)
+    
+    # st.subheader(f"Bar Plot: {selected_label}")
+
+    # fig = px.bar(
+    #     platform_metrics,
+    #     x="platform",
+    #     y=selected_col,
+    #     color="platform",
+    #     color_discrete_map={
+    #         "Facebook": "#0077B6",
+    #         "Google": "#43AA8B",
+    #         "TikTok": "#FF7F51"
+    #     },
+    #     template="plotly_dark",                   # Matches dark dashboard background
+    # )
+
+    # fig.update_layout(
+    #     plot_bgcolor="#181A20",                   # Custom background to match your UI
+    #     paper_bgcolor="#181A20",
+    #     font_color="white",
+    #     width=420, height=250                     # Controls size
+    # )
+
+    # st.plotly_chart(fig, use_container_width=False)
 
     # Charts
     col1, col2 = st.columns(2)
@@ -284,12 +365,21 @@ elif page == "🚀 Platform Performance":
     with col1:
         st.subheader("📈 Platform Trends Over Time")
 
-        metric_choice = st.selectbox("Select Metric:", ["ROAS", "spend", "attributed revenue", "CTR"])
+        metrics = ["ROAS", "spend", "attributed revenue", "CTR"]
+        tabs = st.tabs(metrics)
 
-        fig = px.line(filtered_daily, x='date', y=metric_choice, color='platform',
-                      title=f"{metric_choice.title()} by Platform Over Time")
-        fig.update_layout(height=400)
-        st.plotly_chart(fig, use_container_width=True)
+        for i, tab in enumerate(tabs):
+            with tab:
+                metric = metrics[i]
+                fig = px.line(
+                    filtered_daily,
+                    x='date',
+                    y=metric,
+                    color='platform'
+                )
+                fig.update_layout(height=400)
+                st.plotly_chart(fig, use_container_width=True)
+
 
     with col2:
         st.subheader("🎯 Efficiency Metrics")
@@ -482,11 +572,28 @@ elif page == "🔄 Attribution Analysis":
     col1, col2 = st.columns(2)
 
     with col1:
-        fig = px.treemap(attribution_summary, 
-                        path=['platform', 'tactic'], 
-                        values='attributed revenue',
-                        title="Revenue Attribution Treemap")
-        fig.update_layout(height=400)
+        fig = px.bar(
+        attribution_summary,
+        x="tactic",
+        y="attributed revenue",
+        labels={
+        "tactic": "Marketing Tactic",  
+        "attributed revenue": "Revenue Generated($)"
+        },
+        color="platform",
+        barmode="group",
+        text="attributed revenue",
+        color_discrete_map={
+            "Facebook": "deepskyblue",
+            "Google": "dodgerblue",
+            "TikTok": "lightpink"
+        },
+        title="Attributed Revenue by Tactic and Platform"
+        )
+        fig.update_layout(
+            height=400
+        )
+        fig.update_traces(texttemplate='$%{text:,}', textposition='outside')
         st.plotly_chart(fig, use_container_width=True)
 
     with col2:
