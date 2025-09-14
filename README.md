@@ -35,7 +35,7 @@ Before running the dashboard, ensure you have:
 pip install -r requirements.txt
 ```
 
-⚙️ Installation & Setup
+## ⚙️ Installation & Setup
 Clone the repository:
 
 ```bash
